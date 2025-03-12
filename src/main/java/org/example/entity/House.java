@@ -1,7 +1,5 @@
 package org.example.entity;
 
-//переопределить 3 метода equals hashcode to string
-
 public class House {
     private long id;
     private int apartmentNumber;
@@ -54,6 +52,40 @@ public class House {
 
     public int getServiceLife() {
         return serviceLife;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true; // Проверка на ссылочное равенство
+        if (o == null || getClass() != o.getClass()) return false; // Проверка на null и класс
+
+        House house = (House) o; // Приведение типа
+
+        // Сравнение примитивных полей
+        if (apartmentNumber != house.apartmentNumber) return false;
+        if (Double.compare(house.area, area) != 0) return false;
+        if (floor != house.floor) return false;
+        if (numberOfRooms != house.numberOfRooms) return false;
+        if (serviceLife != house.serviceLife) return false;
+
+        // Сравнение строковых полей
+        if (!street.equals(house.street)) return false;
+        return buildingType.equals(house.buildingType);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = apartmentNumber;
+        temp = Double.doubleToLongBits(area);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + floor;
+        result = 31 * result + numberOfRooms;
+        result = 31 * result + street.hashCode();
+        result = 31 * result + buildingType.hashCode();
+        result = 31 * result + serviceLife;
+        return result;
     }
 
     @Override

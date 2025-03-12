@@ -1,64 +1,46 @@
 package org.example.service;
-
+//interface for validator and service
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.entity.House;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-// не хранить массив тут епта
 public class HouseService {
     private static final Logger logger = LogManager.getLogger(HouseService.class);
-    private List<House> houses;
-
-    public HouseService() {
-        this.houses = new ArrayList<>();
-        logger.debug("HouseService initialized.");
-    }
+    private final List<House> houses = new ArrayList<>(); // Internal state
 
     public void addHouse(House house) {
+        logger.info("Adding house: {}", house);
         if (house != null) {
             houses.add(house);
-            logger.info("House added: {}", house);
-        } else {
-            logger.warn("Attempted to add a null house.");
         }
     }
 
-    public List<House> getHousesWithRooms(int numberOfRooms) {
-        logger.debug("Searching for houses with {} rooms.", numberOfRooms);
-        List<House> result = new ArrayList<>();
-        for (House house : houses) {
-            if (house.getNumberOfRooms() == numberOfRooms) {
-                result.add(house);
-            }
-        }
-        logger.info("Found {} houses with {} rooms.", result.size(), numberOfRooms);
-        return result;
+    public List<House> getHousesWithRooms(int rooms) {
+        logger.info("Searching for houses with {} rooms", rooms);
+        return houses.stream()
+                .filter(house -> house.getNumberOfRooms() == rooms)
+                .collect(Collectors.toList());
     }
 
-    public List<House> getHousesWithRoomsAndFloorRange(int numberOfRooms, int minFloor, int maxFloor) {
-        logger.debug("Searching for houses with {} rooms and floor between {} and {}.", numberOfRooms, minFloor, maxFloor);
-        List<House> result = new ArrayList<>();
-        for (House house : houses) {
-            if (house.getNumberOfRooms() == numberOfRooms && house.getFloor() >= minFloor && house.getFloor() <= maxFloor) {
-                result.add(house);
-            }
+    public List<House> getHousesWithRoomsAndFloorRange(int rooms, int minFloor, int maxFloor) {
+        logger.info("Searching for houses with {} rooms and floor between {} and {}", rooms, minFloor, maxFloor);
+        if (minFloor > maxFloor) {
+            logger.warn("Invalid floor range: minFloor ({}) > maxFloor ({})", minFloor, maxFloor);
+            return new ArrayList<>();
         }
-        logger.info("Found {} houses with {} rooms and floor between {} and {}.", result.size(), numberOfRooms, minFloor, maxFloor);
-        return result;
+        return houses.stream()
+                .filter(house -> house.getNumberOfRooms() == rooms && house.getFloor() >= minFloor && house.getFloor() <= maxFloor)
+                .collect(Collectors.toList());
     }
 
     public List<House> getHousesWithAreaGreaterThan(double area) {
-        logger.debug("Searching for houses with area greater than {}.", area);
-        List<House> result = new ArrayList<>();
-        for (House house : houses) {
-            if (house.getArea() > area) {
-                result.add(house);
-            }
-        }
-        logger.info("Found {} houses with area greater than {}.", result.size(), area);
-        return result;
+        logger.info("Searching for houses with area greater than {}", area);
+        return houses.stream()
+                .filter(house -> house.getArea() > area)
+                .collect(Collectors.toList());
     }
 }

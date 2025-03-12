@@ -1,5 +1,5 @@
 package org.example.creator;
-
+//optional for factory
 import org.example.entity.House;
 import org.example.Validator.Validator;
 

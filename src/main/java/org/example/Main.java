@@ -3,9 +3,9 @@ package org.example;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.entity.House;
-import org.example.creator.HouseFactory;
 import org.example.service.HouseService;
 
+import java.util.List;
 
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
@@ -13,24 +13,28 @@ public class Main {
     public static void main(String[] args) {
         logger.info("Starting the application.");
 
+        // Create the service
         HouseService houseService = new HouseService();
 
-        House house1 = HouseFactory.createHouse(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10);
-        House house2 = HouseFactory.createHouse(2, 202, 60.0, 3, 2, "Second Street", "Apartment", 15);
-        House house3 = HouseFactory.createHouse(3, 303, 90.0, 7, 3, "Third Street", "Apartment", 20);
+        // Add houses to the service
+        houseService.addHouse(new House(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10));
+        houseService.addHouse(new House(2, 202, 60.0, 3, 2, "Second Street", "Apartment", 15));
+        houseService.addHouse(new House(3, 303, 90.0, 7, 3, "Third Street", "Apartment", 20));
 
-        houseService.addHouse(house1);
-        houseService.addHouse(house2);
-        houseService.addHouse(house3);
-
+        // Search for houses with 3 rooms
         logger.info("Searching for houses with 3 rooms:");
-        houseService.getHousesWithRooms(3).forEach(house -> logger.info(house.toString()));
+        List<House> housesWith3Rooms = houseService.getHousesWithRooms(3);
+        housesWith3Rooms.forEach(house -> logger.info(house.toString()));
 
+        // Search for houses with 3 rooms and floor between 4 and 8
         logger.info("Searching for houses with 3 rooms and floor between 4 and 8:");
-        houseService.getHousesWithRoomsAndFloorRange(3, 4, 8).forEach(house -> logger.info(house.toString()));
+        List<House> housesWith3RoomsAndFloorRange = houseService.getHousesWithRoomsAndFloorRange(3, 4, 8);
+        housesWith3RoomsAndFloorRange.forEach(house -> logger.info(house.toString()));
 
+        // Search for houses with an area greater than 70
         logger.info("Searching for houses with area greater than 70:");
-        houseService.getHousesWithAreaGreaterThan(70).forEach(house -> logger.info(house.toString()));
+        List<House> housesWithAreaGreaterThan70 = houseService.getHousesWithAreaGreaterThan(70);
+        housesWithAreaGreaterThan70.forEach(house -> logger.info(house.toString()));
 
         logger.info("Application finished.");
     }

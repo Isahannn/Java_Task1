@@ -5,14 +5,11 @@ import org.example.service.HouseService;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-
 import java.util.List;
 
 import static org.testng.Assert.*;
 
-
 public class HouseServiceTest {
-
     private HouseService houseService;
 
     @BeforeMethod
@@ -110,7 +107,7 @@ public class HouseServiceTest {
         houseService.addHouse(house);
 
         // then
-        assertEquals(houseService.getHousesWithRooms(3).size(), 0);
+        assertTrue(houseService.getHousesWithRooms(3).isEmpty());
     }
 
     @Test
