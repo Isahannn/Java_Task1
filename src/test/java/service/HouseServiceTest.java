@@ -126,7 +126,7 @@ public class HouseServiceTest {
     @Test
     public void testGetHousesWithRoomsAndFloorRange_InvalidRange() {
         // given
-        houseService.addHouse(new House(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10));
+        houseService.addHouse(new House(1, 101, 725.5, 5, 3, "Main Street", "Apartment", 10));
 
         // when
         List<House> result = houseService.getHousesWithRoomsAndFloorRange(3, 8, 4); // Invalid range
