@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.entity.House;
 import org.example.service.HouseService;
+import org.example.service.HouseServiceImpl;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Main {
         logger.info("Starting the application.");
 
         // Create the service
-        HouseService houseService = new HouseService();
+        HouseService houseService = new HouseServiceImpl();
 
         // Add houses to the service
         houseService.addHouse(new House(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10));
