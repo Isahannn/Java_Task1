@@ -2,9 +2,9 @@ package org.example;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.entity.House;
-import org.example.service.HouseService;
-import org.example.service.HouseServiceImpl;
+import org.example.House.entity.House;
+import org.example.House.service.HouseService;
+import org.example.House.service.HouseServiceImpl;
 
 import java.util.List;
 
@@ -24,17 +24,17 @@ public class Main {
 
         // Search for houses with 3 rooms
         logger.info("Searching for houses with 3 rooms:");
-        List<House> housesWith3Rooms = houseService.getHousesWithRooms(3);
+        List<House> housesWith3Rooms = houseService.findHousesWithRooms(3);
         housesWith3Rooms.forEach(house -> logger.info(house.toString()));
 
         // Search for houses with 3 rooms and floor between 4 and 8
         logger.info("Searching for houses with 3 rooms and floor between 4 and 8:");
-        List<House> housesWith3RoomsAndFloorRange = houseService.getHousesWithRoomsAndFloorRange(3, 4, 8);
+        List<House> housesWith3RoomsAndFloorRange = houseService.findHousesWithRoomsAndFloorRange(3, 4, 8);
         housesWith3RoomsAndFloorRange.forEach(house -> logger.info(house.toString()));
 
         // Search for houses with an area greater than 70
         logger.info("Searching for houses with area greater than 70:");
-        List<House> housesWithAreaGreaterThan70 = houseService.getHousesWithAreaGreaterThan(70);
+        List<House> housesWithAreaGreaterThan70 = houseService.findHousesWithAreaGreaterThan(70);
         housesWithAreaGreaterThan70.forEach(house -> logger.info(house.toString()));
 
         logger.info("Application finished.");

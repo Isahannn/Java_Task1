@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example.House.entity;
 
 public class House {
     private long id;
@@ -21,7 +21,7 @@ public class House {
         this.serviceLife = serviceLife;
     }
 
-    // Геттеры
+    // getter
     public long getId() {
         return id;
     }
@@ -56,21 +56,18 @@ public class House {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true; // Проверка на ссылочное равенство
-        if (o == null || getClass() != o.getClass()) return false; // Проверка на null и класс
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        House house = (House) o; // Приведение типа
+        House house = (House) o;
 
-        // Сравнение примитивных полей
-        if (apartmentNumber != house.apartmentNumber) return false;
-        if (Double.compare(house.area, area) != 0) return false;
-        if (floor != house.floor) return false;
-        if (numberOfRooms != house.numberOfRooms) return false;
-        if (serviceLife != house.serviceLife) return false;
-
-        // Сравнение строковых полей
-        if (!street.equals(house.street)) return false;
-        return buildingType.equals(house.buildingType);
+        return apartmentNumber == house.apartmentNumber &&
+                Double.compare(house.area, area) == 0 &&
+                floor == house.floor &&
+                numberOfRooms == house.numberOfRooms &&
+                serviceLife == house.serviceLife &&
+                street.equals(house.street) &&
+                buildingType.equals(house.buildingType);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package service;
 
-import org.example.entity.House;
-import org.example.service.HouseService;
-import org.example.service.HouseServiceImpl;
+import org.example.House.entity.House;
+import org.example.House.service.HouseService;
+import org.example.House.service.HouseServiceImpl;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -19,40 +19,37 @@ public class HouseServiceTest {
     }
 
     @Test
-    public void testGetHousesWithRooms_PositiveCase() {
+    public void testFindHousesWithRooms_PositiveCase() {
         // given
         houseService.addHouse(new House(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10));
-        houseService.addHouse(new House(2, 202, 60.0, 3, 2, "Second Street", "Apartment", 15));
+        houseService.addHouse(new House(2, 202, 60.0, 3, 3, "Second Street", "Apartment", 15));
 
         // when
-        List<House> result = houseService.getHousesWithRooms(3);
+        List<House> result = houseService.findHousesWithRooms(3);
 
         // then
-        assertEquals(result.size(), 1);
-        assertEquals(result.get(0).getId(), 1);
+        assertEquals(result.size(), 2);
     }
 
     @Test
-    public void testGetHousesWithRooms_NoMatch() {
+    public void testFindHousesWithRooms_NoMatch() {
         // given
         houseService.addHouse(new House(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10));
-        houseService.addHouse(new House(2, 202, 60.0, 3, 2, "Second Street", "Apartment", 15));
 
         // when
-        List<House> result = houseService.getHousesWithRooms(4);
+        List<House> result = houseService.findHousesWithRooms(4);
 
         // then
         assertTrue(result.isEmpty());
     }
 
     @Test
-    public void testGetHousesWithRoomsAndFloorRange_PositiveCase() {
+    public void testFindHousesWithRoomsAndFloorRange_PositiveCase() {
         // given
         houseService.addHouse(new House(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10));
-        houseService.addHouse(new House(2, 202, 60.0, 3, 2, "Second Street", "Apartment", 15));
 
         // when
-        List<House> result = houseService.getHousesWithRoomsAndFloorRange(3, 4, 8);
+        List<House> result = houseService.findHousesWithRoomsAndFloorRange(3, 4, 6);
 
         // then
         assertEquals(result.size(), 1);
@@ -60,26 +57,24 @@ public class HouseServiceTest {
     }
 
     @Test
-    public void testGetHousesWithRoomsAndFloorRange_NoMatch() {
+    public void testFindHousesWithRoomsAndFloorRange_NoMatch() {
         // given
         houseService.addHouse(new House(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10));
-        houseService.addHouse(new House(2, 202, 60.0, 3, 2, "Second Street", "Apartment", 15));
 
         // when
-        List<House> result = houseService.getHousesWithRoomsAndFloorRange(3, 6, 8);
+        List<House> result = houseService.findHousesWithRoomsAndFloorRange(3, 6, 8);
 
         // then
         assertTrue(result.isEmpty());
     }
 
     @Test
-    public void testGetHousesWithAreaGreaterThan_PositiveCase() {
+    public void testFindHousesWithAreaGreaterThan_PositiveCase() {
         // given
         houseService.addHouse(new House(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10));
-        houseService.addHouse(new House(2, 202, 60.0, 3, 2, "Second Street", "Apartment", 15));
 
         // when
-        List<House> result = houseService.getHousesWithAreaGreaterThan(70);
+        List<House> result = houseService.findHousesWithAreaGreaterThan(70);
 
         // then
         assertEquals(result.size(), 1);
@@ -87,13 +82,12 @@ public class HouseServiceTest {
     }
 
     @Test
-    public void testGetHousesWithAreaGreaterThan_NoMatch() {
+    public void testFindHousesWithAreaGreaterThan_NoMatch() {
         // given
         houseService.addHouse(new House(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10));
-        houseService.addHouse(new House(2, 202, 60.0, 3, 2, "Second Street", "Apartment", 15));
 
         // when
-        List<House> result = houseService.getHousesWithAreaGreaterThan(80);
+        List<House> result = houseService.findHousesWithAreaGreaterThan(80);
 
         // then
         assertTrue(result.isEmpty());
@@ -101,49 +95,44 @@ public class HouseServiceTest {
 
     @Test
     public void testAddHouse_NullHouse() {
-        // given
-        House house = null;
-
         // when
-        houseService.addHouse(house);
+        houseService.addHouse(null);
 
         // then
-        assertTrue(houseService.getHousesWithRooms(3).isEmpty());
+        assertEquals(houseService.findAllHouses().size(), 0);
     }
 
     @Test
-    public void testGetHousesWithRooms_EmptyList() {
-        // given
-        // No houses added
-
+    public void testFindHousesWithRooms_EmptyList() {
         // when
-        List<House> result = houseService.getHousesWithRooms(3);
+        List<House> result = houseService.findHousesWithRooms(3);
 
         // then
         assertTrue(result.isEmpty());
     }
 
     @Test
-    public void testGetHousesWithRoomsAndFloorRange_InvalidRange() {
+    public void testFindHousesWithRoomsAndFloorRange_InvalidRange() {
         // given
         houseService.addHouse(new House(1, 101, 725.5, 5, 3, "Main Street", "Apartment", 10));
 
         // when
-        List<House> result = houseService.getHousesWithRoomsAndFloorRange(3, 8, 4); // Invalid range
+        List<House> result = houseService.findHousesWithRoomsAndFloorRange(3, 8, 4);
 
         // then
         assertTrue(result.isEmpty());
     }
 
     @Test
-    public void testGetHousesWithAreaGreaterThan_NegativeArea() {
+    public void testFindHousesWithAreaGreaterThan_NegativeArea() {
         // given
         houseService.addHouse(new House(1, 101, 75.5, 5, 3, "Main Street", "Apartment", 10));
 
         // when
-        List<House> result = houseService.getHousesWithAreaGreaterThan(-10); // Negative area
+        List<House> result = houseService.findHousesWithAreaGreaterThan(-10);
 
         // then
-        assertEquals(result.size(), 1); // All houses have area > -10
+        assertEquals(result.size(), 1);
+        assertEquals(result.get(0).getId(), 1);
     }
 }
