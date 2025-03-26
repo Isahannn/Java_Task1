@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Appenders>
-        <!-- Консольный аппендер с цветами -->
+        <!-- Консольный аппендер с цветами (оставлен, но не используется) -->
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %highlight{%-5level}{ERROR=red, WARN=yellow, INFO=green, DEBUG=blue} %logger{36} - %msg%n"/>
         </Console>
@@ -22,9 +22,9 @@
 
     <Loggers>
         <Root level="debug">
-            <!-- Указываем, что используем оба аппендера -->
+            <!-- Используем только файловый аппендер -->
             <AppenderRef ref="RollingFile"/>
-            <AppenderRef ref="Console"/>
+            <!-- Консольный аппендер удален из Root -->
         </Root>
     </Loggers>
 </Configuration>
