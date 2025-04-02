@@ -1,24 +1,22 @@
 package org.example.House.creator;
 
 import org.example.House.entity.House;
-import org.example.House.Validator.HouseValidator;
-
+import org.example.House.validator.Validator;
 import java.util.Optional;
 
 public class HouseFactory {
+    private final Validator<House> validator;
 
-    public static Optional<House> createHouse(long id, int apartmentNumber,
-                                              double area, int floor, int numberOfRooms,
-                                              String street, String buildingType,
-                                              int serviceLife) {
-        // Проверяем параметры до создания объекта
-        if (HouseValidator.validateHouseParameters(id, numberOfRooms, area, floor, street, buildingType, serviceLife)) {
-            // Если параметры корректны, создаем объект House
-            House house = new House(id, apartmentNumber, area, floor, numberOfRooms, street, buildingType, serviceLife);
-            return Optional.of(house);
-        } else {
-            // Если параметры некорректны, возвращаем Optional.empty()
-            return Optional.empty();
-        }
+    public HouseFactory(Validator<House> validator) {
+        this.validator = validator;
+    }
+
+    public Optional<House> createHouse(long id, int apartmentNumber,
+                                       double area, int floor, int rooms,
+                                       String street, String buildingType,
+                                       int serviceLife) {
+        House house = new House(id, apartmentNumber, area, floor,
+                rooms, street, buildingType, serviceLife);
+        return validator.validate(house) ? Optional.of(house) : Optional.empty();
     }
 }

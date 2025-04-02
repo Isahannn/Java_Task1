@@ -6,11 +6,14 @@ import org.example.House.entity.House;
 import org.example.House.service.HouseService;
 import org.example.House.service.HouseServiceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
 
+    private final List<House> houses = new ArrayList<>();
+    //узнать
     public static void main(String[] args) {
         logger.info("Starting the application.");
 

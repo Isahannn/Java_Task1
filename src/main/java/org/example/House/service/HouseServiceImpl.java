@@ -1,54 +1,50 @@
 package org.example.House.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.example.House.entity.House;
+import org.example.House.repository.HouseRepository;
+import org.example.House.utils.HouseLogger;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class HouseServiceImpl implements HouseService {
-    private static final Logger logger = LogManager.getLogger(HouseServiceImpl.class);
-    private final List<House> houses = new ArrayList<>();
+    private final HouseRepository houseRepository = new HouseRepository();
 
     @Override
     public void addHouse(House house) {
         Optional.ofNullable(house).ifPresentOrElse(
                 h -> {
-                    if (!houses.contains(h)) {
-                        houses.add(h);
-                        logger.info("House added: {}", h);
+                    if (houseRepository.addHouse(h)) {
+                        HouseLogger.getLogger().info("House added: {}", h);
                     } else {
-                        logger.warn("Duplicate house: {}", h);
+                        HouseLogger.getLogger().warn("Duplicate house: {}", h);
                     }
                 },
-                () -> logger.warn("Attempt to add null house")
+                () -> HouseLogger.getLogger().warn("Attempt to add null house")
         );
     }
 
     @Override
     public void removeHouse(House house) {
         Optional.ofNullable(house).ifPresent(h -> {
-            boolean removed = houses.remove(h);
+            boolean removed = houseRepository.removeHouse(h);
             if (removed) {
-                logger.info("House removed: {}", h);
+                HouseLogger.getLogger().info("House removed: {}", h);
             } else {
-                logger.warn("House not found: {}", h);
+                HouseLogger.getLogger().warn("House not found: {}", h);
             }
         });
     }
 
     @Override
     public List<House> findAllHouses() {
-        return new ArrayList<>(houses);
+        return houseRepository.getAllHouses();
     }
 
-    // Старые реализации
     @Override
     public List<House> findHousesWithRooms(int rooms) {
-        return houses.stream()
+        return houseRepository.getAllHouses().stream()
                 .filter(h -> h.getNumberOfRooms() == rooms)
                 .collect(Collectors.toList());
     }
@@ -58,7 +54,7 @@ public class HouseServiceImpl implements HouseService {
         if (minFloor > maxFloor) {
             return List.of();
         }
-        return houses.stream()
+        return houseRepository.getAllHouses().stream()
                 .filter(h -> h.getNumberOfRooms() == rooms &&
                         h.getFloor() >= minFloor &&
                         h.getFloor() <= maxFloor)
@@ -67,15 +63,14 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public List<House> findHousesWithAreaGreaterThan(double area) {
-        return houses.stream()
+        return houseRepository.getAllHouses().stream()
                 .filter(h -> h.getArea() > area)
                 .collect(Collectors.toList());
     }
 
-    // Новые методы с Optional
     @Override
     public Optional<House> findHouseById(int id) {
-        return houses.stream()
+        return houseRepository.getAllHouses().stream()
                 .filter(h -> h.getId() == id)
                 .findFirst();
     }

@@ -87,15 +87,16 @@ public class House {
 
     @Override
     public String toString() {
-        return "House{" +
-                "id=" + id +
-                ", apartmentNumber=" + apartmentNumber +
-                ", area=" + area +
-                ", floor=" + floor +
-                ", numberOfRooms=" + numberOfRooms +
-                ", street='" + street + '\'' +
-                ", buildingType='" + buildingType + '\'' +
-                ", serviceLife=" + serviceLife +
-                '}';
+        final StringBuilder sb = new StringBuilder("House{");
+        sb.append("id=").append(id);
+        sb.append(", apartmentNumber=").append(apartmentNumber);
+        sb.append(", area=").append(area);
+        sb.append(", floor=").append(floor);
+        sb.append(", numberOfRooms=").append(numberOfRooms);
+        sb.append(", street='").append(street).append('\'');
+        sb.append(", buildingType='").append(buildingType).append('\'');
+        sb.append(", serviceLife=").append(serviceLife);
+        sb.append('}');
+        return sb.toString();
     }
 }
