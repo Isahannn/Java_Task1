@@ -1,4 +1,4 @@
-package org.example.House.entity;
+package org.example.house.entity;
 
 public class House {
     private long id;

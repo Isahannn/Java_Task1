@@ -1,7 +1,7 @@
-package org.example.House.creator;
+package org.example.house.creator;
 
-import org.example.House.entity.House;
-import org.example.House.validator.Validator;
+import org.example.house.entity.House;
+import org.example.house.validator.Validator;
 import java.util.Optional;
 
 public class HouseFactory {

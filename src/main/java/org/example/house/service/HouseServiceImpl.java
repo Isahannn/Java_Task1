@@ -1,8 +1,8 @@
-package org.example.House.service;
+package org.example.house.service;
 
-import org.example.House.entity.House;
-import org.example.House.repository.HouseRepository;
-import org.example.House.utils.HouseLogger;
+import org.example.house.entity.House;
+import org.example.house.repository.HouseRepository;
+import org.example.house.utils.HouseLogger;
 
 import java.util.List;
 import java.util.Optional;

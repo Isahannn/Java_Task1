@@ -1,4 +1,4 @@
-package org.example.House.validator;
+package org.example.house.validator;
 
 import org.apache.logging.log4j.Logger;
 import java.util.function.Predicate;

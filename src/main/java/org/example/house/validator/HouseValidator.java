@@ -1,8 +1,8 @@
-package org.example.House.validator;
+package org.example.house.validator;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.House.entity.House;
+import org.example.house.entity.House;
 
 import java.util.function.Predicate;
 

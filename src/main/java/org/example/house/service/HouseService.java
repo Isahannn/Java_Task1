@@ -1,6 +1,6 @@
-package org.example.House.service;
+package org.example.house.service;
 
-import org.example.House.entity.House;
+import org.example.house.entity.House;
 import java.util.List;
 import java.util.Optional;
 

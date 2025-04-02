@@ -1,8 +1,8 @@
 package service;
 
-import org.example.House.entity.House;
-import org.example.House.service.HouseService;
-import org.example.House.service.HouseServiceImpl;
+import org.example.house.entity.House;
+import org.example.house.service.HouseService;
+import org.example.house.service.HouseServiceImpl;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

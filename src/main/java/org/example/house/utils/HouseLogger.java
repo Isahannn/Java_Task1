@@ -1,4 +1,4 @@
-package org.example.House.utils;
+package org.example.house.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

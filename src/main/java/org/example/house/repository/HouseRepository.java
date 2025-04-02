@@ -1,6 +1,6 @@
-package org.example.House.repository;
+package org.example.house.repository;
 
-import org.example.House.entity.House;
+import org.example.house.entity.House;
 import java.util.ArrayList;
 import java.util.List;
 
