@@ -1,3 +1,5 @@
+//хэш-сэт
+
 package org.example.house.repository;
 
 import org.example.house.entity.House;

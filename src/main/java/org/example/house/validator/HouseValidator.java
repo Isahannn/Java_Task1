@@ -8,30 +8,28 @@ import java.util.function.Predicate;
 
 public class HouseValidator implements Validator<House> {
     private static final Logger logger = LogManager.getLogger(HouseValidator.class);
-    private boolean isValid = true;
 
     @Override
     public boolean validate(House house) {
         if (house == null) {
             logger.error("House object is null");
-            return false;
+            throw new IllegalArgumentException("House object cannot be null");
         }
 
-        check(house.getId(), "ID", v -> v > 0);
-        check(house.getNumberOfRooms(), "Number of rooms", v -> v > 0);
-        check(house.getArea(), "Area", v -> v > 0);
-        check(house.getFloor(), "Floor", v -> v > 0);
-        check(house.getStreet(), "Street", v -> v != null && !v.trim().isEmpty());
-        check(house.getBuildingType(), "Building type", v -> v != null && !v.trim().isEmpty());
-        check(house.getServiceLife(), "Service life", v -> v > 0);
+        validateField(house.getNumberOfRooms(), "Number of rooms", v -> v > 0);
+        validateField(house.getArea(), "Area", v -> v > 0);
+        validateField(house.getFloor(), "Floor", v -> v > 0);
+        validateField(house.getStreet(), "Street", v -> v != null && !v.isBlank());
+        validateField(house.getBuildingType(), "Building type", v -> v != null && !v.isBlank());
+        validateField(house.getServiceLife(), "Service life", v -> v > 0);
 
-        return isValid;
+        return true;
     }
 
-    private <T> void check(T value, String fieldName, Predicate<T> validator) {
+    private <T> void validateField(T value, String fieldName, Predicate<T> validator) {
         if (!validator.test(value)) {
             logger.error("Invalid {}: {}", fieldName, value);
-            isValid = false;
+            throw new IllegalArgumentException(fieldName + " is invalid: " + value);
         }
     }
 }

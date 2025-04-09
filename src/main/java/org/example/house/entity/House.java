@@ -21,7 +21,6 @@ public class House {
         this.serviceLife = serviceLife;
     }
 
-    // getter
     public long getId() {
         return id;
     }
