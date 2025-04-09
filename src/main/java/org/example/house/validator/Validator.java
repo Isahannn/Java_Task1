@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 public interface Validator<T> {
     boolean validate(T object);
 
-    default <F> boolean validateField(F value, Predicate<F> validator,
+    default <V> boolean validateField(V value, Predicate<V> validator,
                                       String errorMessage, Logger logger) {
         boolean isValid = validator.test(value);
         if (!isValid) {
