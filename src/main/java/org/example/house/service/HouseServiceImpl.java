@@ -4,7 +4,7 @@ package org.example.house.service;
 
 import org.example.house.entity.House;
 import org.example.house.repository.HouseRepository;
-import org.example.house.utils.HouseLogger;
+import org.example.house.util.HouseLogger;
 
 import java.util.List;
 import java.util.Optional;

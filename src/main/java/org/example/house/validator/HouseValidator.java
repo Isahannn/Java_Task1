@@ -6,8 +6,10 @@ import org.example.house.entity.House;
 
 import java.util.function.Predicate;
 
-public class HouseValidator implements Validator<House> {
+public final class HouseValidator implements Validator<House> {
     private static final Logger logger = LogManager.getLogger(HouseValidator.class);
+    private static final Predicate<String> NOT_BLANK = v -> v != null && !v.isBlank();
+    private static final Predicate<Number> POSITIVE = v -> v != null && v.doubleValue() > 0;
 
     @Override
     public boolean validate(House house) {
@@ -16,20 +18,21 @@ public class HouseValidator implements Validator<House> {
             throw new IllegalArgumentException("House object cannot be null");
         }
 
-        validateField(house.getNumberOfRooms(), "Number of rooms", v -> v > 0);
-        validateField(house.getArea(), "Area", v -> v > 0);
-        validateField(house.getFloor(), "Floor", v -> v > 0);
-        validateField(house.getStreet(), "Street", v -> v != null && !v.isBlank());
-        validateField(house.getBuildingType(), "Building type", v -> v != null && !v.isBlank());
-        validateField(house.getServiceLife(), "Service life", v -> v > 0);
+        validateField(house.getNumberOfRooms(), "Number of rooms", POSITIVE);
+        validateField(house.getArea(), "Area", POSITIVE);
+        validateField(house.getFloor(), "Floor", POSITIVE);
+        validateField(house.getStreet(), "Street", NOT_BLANK);
+        validateField(house.getBuildingType(), "Building type", NOT_BLANK);
+        validateField(house.getServiceLife(), "Service life", POSITIVE);
 
         return true;
     }
 
     private <T> void validateField(T value, String fieldName, Predicate<T> validator) {
         if (!validator.test(value)) {
-            logger.error("Invalid {}: {}", fieldName, value);
-            throw new IllegalArgumentException(fieldName + " is invalid: " + value);
+            String errorMessage = String.format("Invalid %s: %s", fieldName, value);
+            logger.error(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 }
